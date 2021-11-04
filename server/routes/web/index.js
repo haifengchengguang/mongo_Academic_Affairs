@@ -15,6 +15,10 @@ module.exports=app=>{
         const model= await Student.create(req.body)
         res.send(model)
     })
+    router.put('/student/:id',async(req,res)=>{
+        const model= await Student.findByIdAndUpdate(req.params.id,req.body)
+        res.send(model)
+    })
     router.post('/teacher',async(req,res)=>{
         // const Model=require(`../../models/${req.params.resource}`)
         const model= await Teacher.create(req.body)

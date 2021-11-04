@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Main from "@/views/Main";
 import CategoryList from "@/views/CategoryList";
 import CategoryEdit from "@/views/CategoryEdit";
+import Edit from "@/views/Edit";
 
 Vue.use(VueRouter)
 
@@ -14,7 +15,8 @@ const routes = [
     component: Main,
     children:[
       {path: '/categories/list',component: CategoryList},
-      {path: '/categories/create',component: CategoryEdit}
+      {path: '/categories/create',component: CategoryEdit},
+      {path: '/categories/edit:id',component: Edit,props:true}
     ]
   },
   {
