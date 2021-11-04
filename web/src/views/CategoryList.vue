@@ -100,7 +100,7 @@
           width="100">
         <template slot-scope="scope">
           <!--        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>-->
-          <el-button type="text" size="small" @click="$router.push(`/categories/edit/${scope.row._id}`)">编辑</el-button>
+          <el-button type="text" size="small" @click=openCourse(scope.row)>编辑</el-button>
         </template>
       </el-table-column>
 
@@ -138,7 +138,7 @@
           width="100">
         <template slot-scope="scope">
           <!--        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>-->
-          <el-button type="text" size="small" @click="$router.push(`/categories/edit/${scope.row._id}`)">编辑</el-button>
+          <el-button type="text" size="small" @click=openTeacher(scope.row)>编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -241,6 +241,75 @@
         <el-button type="primary" @click=" updateData() ">确定</el-button>
       </div>
     </el-dialog>
+    <el-dialog :visible.sync="dialogFormVisible1">
+      <el-form
+          :model="questionForm1"
+          ref="dataForm"
+          label-position="left"
+          label-width="90px"
+          style="width: 400px; margin-left:50px;"
+      >
+        <el-form-item label="教师编号" prop="tid">
+          <el-input v-model="questionForm1.tid" placeholder="请输入学号"></el-input>
+        </el-form-item>
+        <el-form-item label="姓名" prop="name">
+          <el-input v-model="questionForm1.name" placeholder="请输入姓名" />
+        </el-form-item>
+        <el-form-item label="年龄" prop="age">
+          <el-input v-model="questionForm1.age" placeholder="请输入年龄"/>
+        </el-form-item>
+        <el-form-item label="姓别">
+          <el-radio-group v-model="questionForm1.sex" style="margin-right:12px;">
+            <el-radio v-for="(radio, index) in subjectList1" :key="index" :label="radio">{{radio}}</el-radio>
+          </el-radio-group>
+        </el-form-item>
+
+
+        <el-form-item label="学院" prop="dname">
+          <el-select v-model="questionForm1.dname" placeholder="请选择">
+            <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible1 = false">取消</el-button>
+        <el-button type="primary" @click=" updateData1() ">确定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog :visible.sync="dialogFormVisible2">
+      <el-form
+          :model="questionForm2"
+          ref="dataForm"
+          label-position="left"
+          label-width="90px"
+          style="width: 400px; margin-left:50px;"
+      >
+        <el-form-item label="课程编号" prop="cid">
+          <el-input v-model="questionForm2.cid" placeholder="请输入学号"></el-input>
+        </el-form-item>
+        <el-form-item label="名称" prop="name">
+          <el-input v-model="questionForm2.name" placeholder="请输入姓名" />
+        </el-form-item>
+        <el-form-item label="前序课程" prop="fcid">
+          <el-input v-model="questionForm2.fcid" placeholder="请输入年龄"/>
+        </el-form-item>
+        <el-form-item label="学分" prop="credit">
+          <el-input v-model="questionForm2.credit" placeholder="请输入年龄"/>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible2 = false">取消</el-button>
+        <el-button type="primary" @click=" updateData2() ">确定</el-button>
+      </div>
+    </el-dialog>
   </div>
 
 </template>
@@ -269,7 +338,21 @@ name: "CategoryList",
         sex: "",
         dname:''
       },
+      questionForm1: {
+        tid: "",
+        name: "",
+        age: "",
+        sex: "",
+        dname:''
+      },
+      questionForm2: {
+        cid: "",
+        name: "",
+        fcid:"",
+        credit:""
+      },
       subjectList: ["男", "女"],
+      subjectList1: ["M", "F"],
       tabMapOptions: [
         { label: "2009", key: "2009" },
         { label: "2010", key: "2010" },
@@ -303,7 +386,8 @@ name: "CategoryList",
         label: 'history'
       }],
       dialogFormVisible: false,
-
+      dialogFormVisible1: false,
+      dialogFormVisible2: false,
     }
   },
   methods:{
@@ -375,11 +459,30 @@ name: "CategoryList",
       this.optionid=row._id
     },
     updateData(){
-      console.log(this.questionForm)
-      console.log(this.optionid)
+      //console.log(this.questionForm)
+      //console.log(this.optionid)
       this.$http.put(`student/${this.optionid}`,this.questionForm)
       this.dialogFormVisible=false
-    }
+    },
+    openCourse(row){
+      this.dialogFormVisible2=true
+      this.questionForm2=row
+      this.optionid=row._id
+    },
+    updateData2(){
+      this.$http.put(`course/${this.optionid}`,this.questionForm2)
+      this.dialogFormVisible2=false
+    },
+    openTeacher(row){
+      this.dialogFormVisible1=true
+      this.questionForm1=row
+      this.optionid=row._id
+
+    },
+    updateData1(){
+      this.$http.put(`teacher/${this.optionid}`,this.questionForm1)
+      this.dialogFormVisible1=false
+    },
   },
   created(){
     this.fetch()
