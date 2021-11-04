@@ -39,7 +39,7 @@
       <el-table-column prop="sid" label="学号" width="120">
       </el-table-column>
     </el-table>
-    <h3>找出学生关系中的所有学生</h3>
+    <h3>#找出学生关系中的所有学生</h3>
     <el-table :data="items">
       <el-table-column prop="_id" label="ID" width="300">
       </el-table-column>
@@ -57,6 +57,16 @@
       </el-table-column>
       <el-table-column prop="sid" label="学号" width="120">
       </el-table-column>
+      <el-table-column
+
+          label="操作"
+          width="100">
+        <template slot-scope="scope">
+          <!--        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>-->
+          <el-button type="text" size="small" @click="$router.push(`/categories/edit/${scope.row._id}`)">编辑</el-button>
+        </template>
+      </el-table-column>
+
     </el-table>
     <h3>求所有学生的姓名、年龄</h3>
     <el-table :data="items">
@@ -72,7 +82,7 @@
       <el-table-column prop="sex" label="性别" width="120">
       </el-table-column>
     </el-table>
-    <h3>检索所有课程情况</h3>
+    <h3>#检索所有课程情况</h3>
     <el-table :data="course">
       <el-table-column prop="_id" label="ID" width="300">
       </el-table-column>
@@ -84,6 +94,16 @@
       </el-table-column>
       <el-table-column prop="credit" label="学分" width="120">
       </el-table-column>
+      <el-table-column
+
+          label="操作"
+          width="100">
+        <template slot-scope="scope">
+          <!--        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>-->
+          <el-button type="text" size="small" @click="$router.push(`/categories/edit/${scope.row._id}`)">编辑</el-button>
+        </template>
+      </el-table-column>
+
     </el-table>
     <h3>检索先行课号为“300001”的课程名</h3>
     <el-table :data="coursefcid">
@@ -96,6 +116,30 @@
       <el-table-column prop="fcid" label="先行课" width="120">
       </el-table-column>
       <el-table-column prop="credit" label="学分" width="120">
+      </el-table-column>
+    </el-table>
+    <h3>#找出所有老师</h3>
+    <el-table :data="teacher">
+      <el-table-column prop="_id" label="ID" width="300">
+      </el-table-column>
+      <el-table-column prop="name" label="名字" width="120">
+      </el-table-column>
+      <el-table-column prop="age" label="年龄" width="120">
+      </el-table-column>
+      <el-table-column prop="dname" label="学院" width="120">
+      </el-table-column>
+      <el-table-column prop="sex" label="性别" width="120">
+      </el-table-column>
+      <el-table-column prop="tid" label="学号" width="120">
+      </el-table-column>
+      <el-table-column
+
+          label="操作"
+          width="100">
+        <template slot-scope="scope">
+          <!--        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>-->
+          <el-button type="text" size="small" @click="$router.push(`/categories/edit/${scope.row._id}`)">编辑</el-button>
+        </template>
       </el-table-column>
     </el-table>
     <h3>找出年龄大于50岁的老师</h3>
@@ -160,6 +204,7 @@ name: "CategoryList",
       teacherage:[],
       teachersex:[],
       teacherdname:[],
+      teacher:[],
     }
   },
   methods:{
@@ -197,6 +242,13 @@ name: "CategoryList",
       console.log(this.coursefcid)
       //console.log('hello')
     },
+    async fetchteacher(){
+      //console.log("hello")
+      const res=await this.$http.get('teacher')
+      this.teacher=res.data
+      console.log(this.teacher)
+      //console.log('hello')
+    },
     async fetchteacherage(){
       //console.log("hello")
       const res=await this.$http.get('teacherage')
@@ -228,6 +280,7 @@ name: "CategoryList",
     this.fetchteacherage()
     this.fetchteachersex()
     this.fetchteacherdname()
+    this.fetchteacher()
   }
 
 }
