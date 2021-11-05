@@ -198,6 +198,17 @@
       <el-table-column prop="tid" label="学号" width="120">
       </el-table-column>
     </el-table>
+    <h1>实验6</h1>
+    <h3>列出student集合中出现过的所有课程名称（distinct）</h3>
+    <el-table :data="studentcourse">
+      <el-table-column prop="NAME" label="课程" width="120">
+      </el-table-column>
+    </el-table>
+    <h3>找出平均成绩排名前10的学生</h3>
+    <el-table :data="top10student">
+      <el-table-column prop="NAME" label="姓名" width="120">
+      </el-table-column>
+    </el-table>
     <el-dialog :visible.sync="dialogFormVisible">
       <el-form
           :model="questionForm"
@@ -330,6 +341,8 @@ export default {
 name: "CategoryList",
   data(){
     return{
+      top10student:[],
+      studentcourse:[],
       items:[],
       ageless20:[],
       agedname:[],
@@ -406,62 +419,76 @@ name: "CategoryList",
       //console.log("hello")
       const res=await this.$http.get('student')
       this.items=res.data
-      console.log(this.items)
+      //console.log(this.items)
     },
     async fetchageless20(){
       //console.log("hello")
       const res=await this.$http.get('studentageless20')
       this.ageless20=res.data
-      console.log(this.ageless20)
+      //console.log(this.ageless20)
       //console.log('hello')
     },
     async fetchagedname(){
       //console.log("hello")
       const res=await this.$http.get('studentagedname')
       this.agedname=res.data
-      console.log(this.agedname)
+      //console.log(this.agedname)
       //console.log('hello')
     },
     async fetchcourse(){
       //console.log("hello")
       const res=await this.$http.get('course')
       this.course=res.data
-      console.log(this.course)
+      //console.log(this.course)
       //console.log('hello')
     },
     async fetchcoursefcid(){
       //console.log("hello")
       const res=await this.$http.get('coursefcid')
       this.coursefcid=res.data
-      console.log(this.coursefcid)
+      //console.log(this.coursefcid)
       //console.log('hello')
     },
     async fetchteacher(){
       //console.log("hello")
       const res=await this.$http.get('teacher')
       this.teacher=res.data
-      console.log(this.teacher)
+      //console.log(this.teacher)
       //console.log('hello')
     },
     async fetchteacherage(){
       //console.log("hello")
       const res=await this.$http.get('teacherage')
       this.teacherage=res.data
-      console.log(this.teacherage)
+      //console.log(this.teacherage)
       //console.log('hello')
     },
     async fetchteachersex(){
       //console.log("hello")
       const res=await this.$http.get('teachersex')
       this.teachersex=res.data
-      console.log(this.teachersex)
+      //console.log(this.teachersex)
       //console.log('hello')
     },
     async fetchteacherdname(){
       //console.log("hello")
       const res=await this.$http.get('teacherdname')
       this.teacherdname=res.data
-      console.log(this.teacherdname)
+      //console.log(this.teacherdname)
+      //console.log('hello')
+    },
+    async fetchstudentcourse(){
+      //console.log("hello")
+      const res=await this.$http.get('studentcourse')
+      this.studentcourse=res.data
+      console.log(this.studentcourse)
+      //console.log('hello')
+    },
+    async fetchtop10student(){
+      //console.log("hello")
+      const res=await this.$http.get('top10student')
+      this.top10student=res.data
+      console.log(this.top10student)
       //console.log('hello')
     },
     openstudent(row){
@@ -505,6 +532,8 @@ name: "CategoryList",
     this.fetchteachersex()
     this.fetchteacherdname()
     this.fetchteacher()
+    this.fetchstudentcourse()
+    this.fetchtop10student()
   }
 
 }

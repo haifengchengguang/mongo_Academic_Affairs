@@ -3,10 +3,10 @@
     <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
       <el-menu router :default-openeds="['1', '3']">
         <el-submenu index="1">
-          <template slot="title"><i class="el-icon-message"></i>导航一</template>
+          <template slot="title"><i class="el-icon-message"></i>nosql实验</template>
           <el-menu-item-group>
             <template slot="title">nosql实验</template>
-            <el-menu-item index="/categories/list">实验二-简单查询</el-menu-item>
+            <el-menu-item index="/categories/list">查询、修改、选课</el-menu-item>
             <el-menu-item index="/categories/create">实验三-简单插入</el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group title="分组2">

@@ -7,6 +7,9 @@ module.exports=app=>{
     const Course=require("../../models/Course")
     const Teacher=require("../../models/Teacher")
     const StudentCourse=require("../../models/StudentCourse")
+    const StudentCourse1=require("../../models/StudentCourse1")
+    const Course1=require("../../models/Course1")
+    const Student1=require("../../models/Student1")
     router.get('/categories',async(req,res)=>{
         const items= await Category.find().limit(10)
         res.send(items)
@@ -89,6 +92,14 @@ module.exports=app=>{
     router.get('/astronomy',async(req,res)=>{
         const items= await Astronomy.find().limit(10)
         res.send(items)
+    })
+    router.get('/studentcourse',async(req,res)=>{
+        const items1= await StudentCourse1.find().distinct('CID')
+        const items=await Course1.find().where({cid:items1.cid})
+        res.send(items)
+    })
+    router.get('/top10student',async(req,res)=>{
+        const items1=await StudentCourse1.aggregate()
     })
     app.use('/web/api',router)
 }
