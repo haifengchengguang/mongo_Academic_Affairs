@@ -6,13 +6,24 @@ module.exports=app=>{
     const Astronomy=require("../../models/Astronomy")
     const Course=require("../../models/Course")
     const Teacher=require("../../models/Teacher")
+    const StudentCourse=require("../../models/StudentCourse")
     router.get('/categories',async(req,res)=>{
         const items= await Category.find().limit(10)
         res.send(items)
     })
+    router.get('/studentcourse/:id',async(req,res)=>{
+        const items= await Student.findById(req.params.id)
+        const items1= await StudentCourse.find().where({sid:items.sid})
+        res.send(items1)
+    })
     router.post('/student',async(req,res)=>{
         // const Model=require(`../../models/${req.params.resource}`)
         const model= await Student.create(req.body)
+        res.send(model)
+    })
+    router.post('/selectcourse',async(req,res)=>{
+        // const Model=require(`../../models/${req.params.resource}`)
+        const model= await StudentCourse.create(req.body)
         res.send(model)
     })
     router.put('/student/:id',async(req,res)=>{
