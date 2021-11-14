@@ -95,11 +95,55 @@ module.exports=app=>{
     })
     router.get('/studentcourse',async(req,res)=>{
         const items1= await StudentCourse1.find().distinct('CID')
-        const items=await Course1.find().where({cid:items1.cid})
-        res.send(items)
+        //const items=await Course1.find().where({cid:items1.cid})
+        res.send(items1)
     })
     router.get('/top10student',async(req,res)=>{
-        const items1=await StudentCourse1.aggregate()
+        const items1=await StudentCourse1.aggregate([{
+            $group: {
+                _id: "$SID",
+                avgscore: {
+                    $avg: "$SCORE",
+                }
+            },
+
+
+        }]).sort({"avgscore":-1}).limit(10)
+        //const items=await
+        // Student1.find({NAME:1}).where({SID:items1._id})
+        res.send(items1)
     })
+    router.get('/lab6sub3',async(req,res)=>{
+        const items1=await StudentCourse1.aggregate([{
+            $group: {
+                _id: "$SID",
+                count: {
+                    $sum:1
+                }
+            },
+
+
+        }]).sort({"count":-1}).limit(10)
+        //const items=await
+        // Student1.find({NAME:1}).where({SID:items1._id})
+        res.send(items1)
+    })
+    router.get('/lab6sub4',async(req,res)=>{
+        const items1=await StudentCourse1.aggregate([{
+            $group: {
+                _id: "$SID",
+                score: {
+                    $max:"$SCORE"
+                },
+            },
+
+
+        }]).limit(100)
+        //const items=await
+        // Student1.find({NAME:1}).where({SID:items1._id})
+
+        res.send(items1)
+    })
+
     app.use('/web/api',router)
 }

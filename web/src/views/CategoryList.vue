@@ -481,15 +481,15 @@ name: "CategoryList",
       //console.log("hello")
       const res=await this.$http.get('studentcourse')
       this.studentcourse=res.data
-      console.log(this.studentcourse)
+      //console.log(this.studentcourse)
       //console.log('hello')
     },
     async fetchtop10student(){
-      //console.log("hello")
+      console.log("hello")
       const res=await this.$http.get('top10student')
       this.top10student=res.data
       console.log(this.top10student)
-      //console.log('hello')
+      console.log('hello')
     },
     openstudent(row){
       this.dialogFormVisible=true

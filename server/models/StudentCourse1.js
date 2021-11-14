@@ -3,7 +3,7 @@ const mongoose=require("mongoose")
 const schema=new mongoose.Schema({
     sid:{type:String},
     cid:{type:String},
-    score:{type:String},
+    score:{type:Number},
     tid:{type:String}
 
 })
